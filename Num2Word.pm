@@ -11,8 +11,8 @@ package Lingua::Num2Word;
 BEGIN {
   use Exporter ();
   use vars qw($VERSION $REVISION @ISA @EXPORT_OK %known);
-  $VERSION    = '0.06';
-  ($REVISION) = '$Revision: 1.24 $' =~ /([\d.]+)/;
+  $VERSION    = '0.07';
+  ($REVISION) = '$Revision: 1.25 $' =~ /([\d.]+)/;
   @ISA        = qw(Exporter);
   @EXPORT_OK  = qw(&cardinal &get_interval &known_langs &langs);
 }
@@ -404,7 +404,9 @@ reference to list depending to calling context.
 
 =back
 
-=head2 Language codes and names from iso639 can be found at L<"http://www.triacom.com/archive/iso639.en.html">
+=head2 Language codes and names
+
+Language codes and names from iso639 can be found at L<http://www.triacom.com/archive/iso639.en.html>
 
 =head1 EXPORT_OK
 
@@ -429,41 +431,41 @@ Currently supported languages/modules are:
 
 =over
 
-=item * af - Lingua::AF::Numbers
+=item * af - L<Lingua::AF::Numbers>
 
-=item * cs - Lingua::CS::Num2Word
+=item * cs - L<Lingua::CS::Num2Word>
 
-=item * de - Lingua::DE::Num2Word
+=item * de - L<Lingua::DE::Num2Word>
 
-=item * en - Lingua::EN::Numbers
+=item * en - L<Lingua::EN::Numbers>
 
-=item * es - Lingua::ES::Numeros
+=item * es - L<Lingua::ES::Numeros>
 
-=item * eu - Lingua::EU::Numbers
+=item * eu - L<Lingua::EU::Numbers>
 
-=item * fr - Lingua::FR::Numbers
+=item * fr - L<Lingua::FR::Numbers>
 
-=item * id - Lingua::ID::Nums2Words
+=item * id - L<Lingua::ID::Nums2Words>
 
 =item * in - see 'id'
 
-=item * it - Lingua::IT::Numbers
+=item * it - L<Lingua::IT::Numbers>
 
-=item * ja - Lingua::JA::Number
+=item * ja - L<Lingua::JA::Number>
 
-=item * nl - Lingua::NL::Numbers
+=item * nl - L<Lingua::NL::Numbers>
 
-=item * no - Lingua::NO::Num2Word
+=item * no - L<Lingua::NO::Num2Word>
 
-=item * pl - Lingua::PL::Numbers
+=item * pl - L<Lingua::PL::Numbers>
 
-=item * pt - Lingua::PT::Nums2Words
+=item * pt - L<Lingua::PT::Nums2Words>
 
-=item * ru - Lingua::RU::Number
+=item * ru - L<Lingua::RU::Number>
 
-=item * sv - Lingua::SV::Num2Word
+=item * sv - L<Lingua::SV::Num2Word>
 
-=item * zh - Lingua::ZH::Numbers
+=item * zh - L<Lingua::ZH::Numbers>
 
 =back
 
@@ -477,7 +479,7 @@ Roman Vasicek E<lt>rv@petamem.comE<gt>
 
 =head1 COPYRIGHT
 
-Copyright (c) 2002-2004 PetaMem s.r.o.
+Copyright (c) 2002-2004 PetaMem s.r.o. - L<http://www.petamem.com/>
 
 This package is free software. You can redistribute and/or modify it under
 the same terms as Perl itself.

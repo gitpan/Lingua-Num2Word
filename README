@@ -1,4 +1,4 @@
-Lingua/Num2Word version 0.06
+Lingua/Num2Word version 0.07
 ============================
 
 Lingua::Num2Word is a wrapper for number to text conversion modules of
@@ -42,7 +42,7 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright (c) 2002-2004 PetaMem s.r.o.
+Copyright (c) 2002-2004 PetaMem s.r.o. - http://www.petamem.com/
 
 This package is free software. You can redistribute and/or modify it under
 the same terms as Perl itself.
