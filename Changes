@@ -1,5 +1,15 @@
 Revision history for Perl extension Lingua::Num2Word.
 
+0.04    - update docs
+	- output is in utf8 from now
+        - add support for languages/packages
+	  it - Lingua::IT::Numbers
+          nl - Lingua::NL::Numbers
+	  pl - Lingua::PL::Numbers
+	  ru - Lingua::RU::Number
+	  sv - Lingua::SV::Num2Word
+	  zh - Lingua::ZH::Numbers
+
 0.03	- add support for language
 	  eu - Lingua::EU::Numbers
 

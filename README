@@ -1,4 +1,4 @@
-Lingua/Num2Word version 0.03
+Lingua/Num2Word version 0.04
 ============================
 
 Lingua::Num2Word is a wrapper for number to text conversion modules of
@@ -17,6 +17,8 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
+  Encode (perl 5.8.0 and newer)
+
   module for requested conversion eg. Lingua::AF::Numbers for Afrikaans
   currently supported languages/modules are:
     af - Lingua::AF::Numbers
@@ -27,13 +29,19 @@ This module requires these other modules and libraries:
     eu - Lingua::EU::Numbers
     fr - Lingua::FR::Numbers
     id - Lingua::ID::Nums2Words
+    in - see 'id'
+    it - Lingua::IT::Numbers
     ja - Lingua::JA::Number
+    nl - Lingua::NL::Numbers
+    pl - Lingua::PL::Numbers
     pt - Lingua::PT::Nums2Words
-
+    ru - Lingua::RU::Number
+    sv - Lingua::SV::Num2Word
+    zh - Lingua::ZH::Numbers
 
 COPYRIGHT AND LICENCE
 
-Copyright (c) 2002 PetaMem s.r.o.
+Copyright (c) 2002-2004 PetaMem s.r.o.
 
-This package is free software. Tou can redistribute and/or modify it under
+This package is free software. You can redistribute and/or modify it under
 the same terms as Perl itself.

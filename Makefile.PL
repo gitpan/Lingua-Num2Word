@@ -1,3 +1,4 @@
+use 5.008_000;
 use ExtUtils::MakeMaker;
 WriteMakefile(
     'NAME'              => 'Lingua::Num2Word',
