@@ -11,10 +11,10 @@ package Lingua::Num2Word;
 BEGIN {
   use Exporter ();
   use vars qw($VERSION $REVISION @ISA @EXPORT_OK %known);
-  $VERSION    = '0.05';
-  ($REVISION) = '$Revision: 1.18 $' =~ /([\d.]+)/;
+  $VERSION    = '0.06';
+  ($REVISION) = '$Revision: 1.24 $' =~ /([\d.]+)/;
   @ISA        = qw(Exporter);
-  @EXPORT_OK  = qw(&cardinal &known_langs &langs);
+  @EXPORT_OK  = qw(&cardinal &get_interval &known_langs &langs);
 }
 # }}}
 # {{{ use block
@@ -24,21 +24,27 @@ use Encode;
 
 # {{{ templates for functional and object interface
 #
-my $template_func = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
-                    '$result = __PACKAGE__::__FUNCTION__($number);'."\n";
+my $template_func = q§ use __PACKAGE_WITH_VERSION__ ();
+                       $result = __PACKAGE__::__FUNCTION__($number);
+                     §;
 
-my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
-                    'my $tmp_obj = new __PACKAGE__;'."\n".
-                    '$result = $tmp_obj->__FUNCTION__($number);'."\n";
+my $template_obj  = q§ use __PACKAGE_WITH_VERSION__ ();
+                       my $tmp_obj = new __PACKAGE__;
+                       $result = $tmp_obj->__FUNCTION__($number);
+                     §;
+
 # }}}
 # {{{ %known                    language codes from iso639 mapped to respective interface
 #
 %known = (aa => undef, ab => undef,
 	  af => { 'package'  => 'Numbers',
-		  'version'  => '0.2',
+		  'version'  => '1.1',
                   'charset'  => 'ascii',
-		  'function' =>'parse',
-	          'code'     => $template_obj },
+		  'limit_lo' => 0,
+                  'limit_hi' => 99_999_999_999,
+		  'function' => 'parse',
+	          'code'     => $template_obj,
+		},
 	  am => undef, ar => undef, as => undef, ay => undef,
 	  az => undef, ba => undef, be => undef, bg => undef,
 	  bh => undef, bi => undef, bn => undef, bo => undef,
@@ -46,41 +52,60 @@ my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
 	  cs => { 'package'  => 'Num2Word',
 		  'version'  => '0.01',
                   'charset'  => 'iso-8859-2',
-		  'function' =>'num2cs_cardinal',
-	          'code'     => $template_func },
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999,
+		  'function' => 'num2cs_cardinal',
+	          'code'     => $template_func,
+		},
 	  cy => undef, da => undef,
 	  de => { 'package'  => 'Num2Word',
 		  'version'  => '0.01',
                   'charset'  => 'iso-8859-1',
-		  'function' =>'num2de_cardinal',
-	          'code'     => $template_func },
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999,
+		  'function' => 'num2de_cardinal',
+	          'code'     => $template_func,
+		},
 	  dz => undef, el => undef,
 	  en => { 'package'  => 'Numbers',
 		  'version'  => '0.01',
                   'charset'  => 'ascii',
+		  'limit_lo' => 1,
+                  'limit_hi' => 999_999_999_999_999, # 1e63
 		  'function' => '',
-	          'code'     => 'use __PACKAGE_WITH_VERSION__ qw(American);'."\n".
-	  	                'my $tmp_obj = new __PACKAGE__;'."\n".
-	  	                '$tmp_obj->parse($number);'."\n".
-	  	                '$result = $tmp_obj->get_string;'."\n" },
+	          'code'     => q§ use __PACKAGE_WITH_VERSION__ qw(American);
+				   my $tmp_obj = new __PACKAGE__;
+				   $tmp_obj->parse($number);
+				   $result = $tmp_obj->get_string;
+				 §,
+		},
 	  eo => undef,
 	  es => { 'package'  => 'Numeros',
 		  'version'  => '0.01',
                   'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999_999,
 		  'function' => 'cardinal',
-	          'code'     => $template_obj },
+	          'code'     => $template_obj,
+		},
 	  et => undef,
 	  eu => { 'package'  => 'Numbers',
 		  'version'  => '0.01',
                   'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999,
 		  'function' => 'cardinal2alpha',
-	          'code'     => $template_func },
+	          'code'     => $template_func,
+		},
 	  fa => undef, fi => undef, fj => undef, fo => undef,
 	  fr => { 'package'  => 'Numbers',
-		  'version'  => '0.02',
+		  'version'  => '0.04',
                   'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999_999, # < 1e52
 		  'function' => 'number_to_fr',
-	          'code'     => $template_func },
+	          'code'     => $template_func,
+		},
 	  fy => undef, ga => undef, gd => undef, gl => undef,
 	  gn => undef, gu => undef, ha => undef, he => undef,
 	  hi => undef, hr => undef, hu => undef, hy => undef,
@@ -88,21 +113,31 @@ my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
 	  id => { 'package'  => 'Nums2Words',
 		  'version'  => '0.01',
                   'charset'  => 'ascii',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999_999,
 		  'function' => 'nums2words',
-	          'code'     => $template_func },
+	          'code'     => $template_func,
+		},
 	  ie => undef, ik => undef, is => undef,
 	  it => { 'package'  => 'Numbers',
 		  'version'  => '0.06',
                   'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999,
 		  'function' => 'number_to_it',
-	          'code'     => $template_func },
+	          'code'     => $template_func,
+		},
 	  ja => { 'package'  => 'Number',
 		  'version'  => '0.01',
 		  'charset'  => 'ascii',
+		  'limit_lo' => 1,
+                  'limit_hi' => 999_999_999_999_999,
 		  'function' => 'to_string',
-		  'code'     => 'use __PACKAGE_WITH_VERSION__ ();'."\n".
- 		                'my @words = __PACKAGE__::__FUNCTION__($number);'."\n".
-		                "\$result = join ' ', \@words;"."\n" },
+		  'code'     => q§ use __PACKAGE_WITH_VERSION__ ();
+				   my @words = __PACKAGE__::__FUNCTION__($number);
+				   $result = join ' ', @words;
+				 §,
+		},
 	  jw => undef, ka => undef, kk => undef, kl => undef,
           km => undef, kn => undef, ko => undef, ks => undef,
 	  ku => undef, ky => undef, la => undef, ln => undef,
@@ -113,29 +148,57 @@ my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
 	  nl => { 'package'  => 'Numbers',
 		  'version'  => '1.2',
                   'charset'  => 'ascii',
+		  'limit_lo' => 0,
+                  'limit_hi' => 99_999_999_999,
 	  	  'function' => 'parse',
- 	          'code'     => $template_obj },
-	  no => undef, oc => undef, om => undef, or => undef,
+ 	          'code'     => $template_obj,
+		},
+	  no => { 'package'  => 'Num2Word',
+		  'version'  => '0.011',
+		  'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999,
+		  'function' => 'num2no_cardinal',
+		  'code'     => $template_obj,
+		},
+	  oc => undef, om => undef, or => undef,
 	  pa => undef,
 	  pl => { 'package'  => 'Numbers',
 		  'version'  => '1.0',
                   'charset'  => 'cp1250',
+		  'limit_lo' => 0,
+                  'limit_hi' => 9_999_999_999_999,
 		  'function' => 'parse',
-	          'code'     => $template_obj },
+	          'code'     => $template_obj,
+		},
 	  ps => undef,
 	  pt => { 'package'  => 'Nums2Words',
 		  'version'  => '1.03',
                   'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999_999,
 		  'function' => 'num2word',
-	          'code'     => $template_func },
+	          'code'     => $template_func,
+		},
 	  qu => undef, rm => undef, rn => undef, ro => undef,
 	  ru => { 'package'  => 'Number',
 		  'version'  => '0.03',
                   'charset'  => 'windows-1251',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999_999_999,
 		  'function' => 'rur_in_words',
-	          'code'     => 'use __PACKAGE_WITH_VERSION__ ();'."\n".
-		                '$result = __PACKAGE__::__FUNCTION__($number);'."\n".
-		                '$result =~ s/\S+\s+\S+\s+\S+$// if ($result);' },
+	          'code'     => q§ use __PACKAGE_WITH_VERSION__ ();
+				   $result = __PACKAGE__::__FUNCTION__($number);
+				   if ($result) {
+				     if ($number) {
+				       $result =~ s/\s+\S+\s+\S+\s+\S+$//;
+				     } else {
+				       $result =~ s/\s+\S+$//;
+				     }
+				     $result =~ s/^\s+//;
+				   }
+				 §,
+		},
 	  rw => undef, sa => undef, sd => undef, sg => undef,
 	  sh => undef, si => undef, sk => undef, sl => undef,
 	  sm => undef, sn => undef, so => undef, sq => undef,
@@ -143,8 +206,11 @@ my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
           sv => { 'package'  => 'Num2Word',
 		  'version'  => '0.04',
                   'charset'  => 'iso-8859-1',
+		  'limit_lo' => 0,
+                  'limit_hi' => 999_999_999,
 		  'function' => 'num2sv_cardinal',
-		  'code'     => $template_func },
+		  'code'     => $template_func,
+		},
 	  sw => undef, ta => undef, te => undef, tg => undef,
 	  th => undef, ti => undef, tk => undef, tl => undef,
 	  tn => undef, to => undef, tr => undef, ts => undef,
@@ -154,11 +220,15 @@ my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
           zh => { 'package'  => 'Numbers',
                   'version'  => '0.03',
                   'charset'  => 'utf8',
+		  'limit_lo' => 1,
+                  'limit_hi' => 999_999_999_999_999,
                   'function' => '',
-                  'code'     => 'use __PACKAGE_WITH_VERSION__ qw(traditional);'."\n".
-                                'my $tmp_obj = new __PACKAGE__;'."\n".
-                                '$tmp_obj->parse($number);'."\n".
-                                '$result = $tmp_obj->get_string;'."\n" },
+                  'code'     => q§ use __PACKAGE_WITH_VERSION__ qw(traditional);
+				   my $tmp_obj = new __PACKAGE__;
+				   $tmp_obj->parse($number);
+				   $result = $tmp_obj->get_string;
+				 §,
+		},
 	  zu => undef );
 # }}}
 # {{{ %known duplicity          codes from iso639 have the same interface of another code
@@ -193,6 +263,28 @@ sub langs {
   return @tmp if (wantarray);
   return \@tmp;
 }
+# }}}
+# {{{ get_interval              get minimal and maximal supported number
+
+#
+# Return:
+#  undef for unsupported language
+#  list or list reference (depending to calling context) with
+#  minimal and maximal supported number
+#
+sub get_interval {
+  my $self = ref($_[0]) ? shift : Lingua::Num2Word->new();
+  my $lang = shift || return undef;
+  my @limits;
+
+  return undef if (!defined $known{$lang});
+
+  @limits = ($known{$lang}{limit_lo}, $known{$lang}{limit_hi});
+
+  return @limits if (wantarray);
+  return \@limits;
+}
+
 # }}}
 # {{{ cardinal                  convert number to text
 #
@@ -262,30 +354,53 @@ various languages in the Lingua:: hierarchy.
 
  print $text || "sorry, can't convert this number into czech language.";
 
+ # check if number is in supported interval before conversion
+ my $number = 999_999_999_999;
+ my $limit  = $numbers->get_interval('cs');
+ if ($limit) {
+   if ($number > $$limit[1] || $number < $$limit[0]) {
+     print "Number is outside of supported range - <$$limit[0], $$limit[1]>.";
+   } else {
+     print Lingua::Num2Word::cardinal( 'cs', $number );
+   }
+ } else {
+   print "Unsupported language.";
+ }
+
 =head1 DESCRIPTION
 
-Lingua::Num2Word is module for converting numbers into their representation
-in spoken language. This is wrapper for various Lingua::XX::Num2Word modules.
-Output encoding is utf8.
+Lingua::Num2Word is a module for converting numbers into their
+equivalent in written representation. This is a wrapper for various
+Lingua::XX::Num2Word modules that do the conversions for specific
+languages.  Output encoding is utf-8.
 
-For further information about various limitations see documentation for
-currently used package.
+For further information about various limitations of the specific
+modules see their documentation.
 
 =head2 Functions
 
 =over
 
-=item * known_langs
-
-List of all currently supported languages.
-
-=item * langs
-
-List of all known language codes from iso639.
-
 =item * cardinal(lang,number)
 
 Conversion from number to text representation in specified language.
+
+=item * get_interval(lang)
+
+Returns the minimal and maximal number (inclusive) supported by the
+conversion in a specified language. The returned value is a list of
+two elements (low,high) or reference to this list depending on calling
+context. In case a unsupported language is passed undef is returned.
+
+=item * known_langs
+
+List of all currently supported languages. Return value is list or reference
+to list depending to calling context.
+
+=item * langs
+
+List of all known language codes from iso639. Return value is list or
+reference to list depending to calling context.
 
 =back
 
@@ -296,6 +411,8 @@ Conversion from number to text representation in specified language.
 =over
 
 =item * cardinal
+
+=item * get_interval
 
 =item * known_langs
 
@@ -335,6 +452,8 @@ Currently supported languages/modules are:
 =item * ja - Lingua::JA::Number
 
 =item * nl - Lingua::NL::Numbers
+
+=item * no - Lingua::NO::Num2Word
 
 =item * pl - Lingua::PL::Numbers
 
