@@ -11,8 +11,8 @@ package Lingua::Num2Word;
 BEGIN {
   use Exporter ();
   use vars qw($VERSION $REVISION @ISA @EXPORT_OK %known);
-  $VERSION =    '0.04';
-  ($REVISION) = '$Revision: 1.16 $' =~ /([\d.]+)/;
+  $VERSION    = '0.05';
+  ($REVISION) = '$Revision: 1.18 $' =~ /([\d.]+)/;
   @ISA        = qw(Exporter);
   @EXPORT_OK  = qw(&cardinal &known_langs &langs);
 }
@@ -182,13 +182,16 @@ sub known_langs {
     push @result,$_ if (defined $known{$_});
   }
 
-  return @result;
+  return @result if (wantarray);
+  return \@result;
 }
 # }}}
 # {{{ langs                     list of all languages from iso639
 #
 sub langs {
-  return keys %known;
+  my @tmp = keys %known;
+  return @tmp if (wantarray);
+  return \@tmp;
 }
 # }}}
 # {{{ cardinal                  convert number to text

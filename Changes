@@ -1,5 +1,7 @@
 Revision history for Perl extension Lingua::Num2Word.
 
+0.05    - langs() and known_langs() return value depends on calling context
+
 0.04    - update docs
 	- output is in utf8 from now
         - add support for languages/packages
