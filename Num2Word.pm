@@ -2,7 +2,7 @@
 #
 # Started by rv@petamem.com at 2002-07-01
 #
-# $Id: Num2Word.pm,v 1.10 2002/07/12 14:11:11 rv Exp $
+# $Id: Num2Word.pm,v 1.11 2002/07/16 08:06:42 rv Exp $
 #
 # PPCG: 0.5
 
@@ -13,9 +13,9 @@ use strict;
 BEGIN {
   use Exporter ();
   use vars qw($VERSION @ISA @EXPORT_OK %MAP %known);
-  $VERSION = '0.01';
+  $VERSION = '0.02';
   @ISA     = qw(Exporter);
-  @EXPORT_OK = qw(&cardinal);
+  @EXPORT_OK = qw(&cardinal &known_langs &langs);
 }
 
 # {{{ %MAP                      language codes from iso639
@@ -178,7 +178,7 @@ sub langs {
 # {{{ cardinal                 convert number to text
 
 sub cardinal {
-  my $self   = shift;
+  my $self   = ref($_[0]) ? shift() : Lingua::Num2Word->new();
   my $result = '';
   my $lang   = defined $_[0] ? shift : return $result;
   my $number = defined $_[0] ? shift : return $result;
@@ -238,6 +238,9 @@ various languages in the Lingua:: hierarchy.
  
  # try to use czech module (Lingua::CS::Num2Word) for conversion to text
  my $text = $numbers->cardinal( 'cs', 123 );
+ 
+ # or procedural usage if you dislike OO
+ my $text = Lingua::Num2Word::cardinal( 'cs', 123 );
  
  print $text || "sorry, can't convert this number into czech language.";
 
@@ -445,7 +448,15 @@ Conversion from number to text representation in specified language.
 
 =head1 EXPORT_OK
 
-cardinal
+=over
+
+=item * cardinal
+
+=item * known_langs
+
+=item * langs
+
+=back
 
 =head1 KNOWN BUGS
 

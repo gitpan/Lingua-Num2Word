@@ -1,5 +1,7 @@
 Revision history for Perl extension Lingua::Num2Word.
 
+0.02	- fix procedural interface (thanks to Briac Pilpré)
+
 0.01	- original version; spuport for languages/packages:
 	  af - Lingua::AF::Numbers
 	  cs - Lingua::CS::Num2Word
