@@ -2,7 +2,7 @@
 #
 # Started by rv@petamem.com at 2002-07-01
 #
-# $Id: Num2Word.pm,v 1.11 2002/07/16 08:06:42 rv Exp $
+# $Id: Num2Word.pm,v 1.12 2002/12/18 11:26:02 rv Exp $
 #
 # PPCG: 0.5
 
@@ -13,7 +13,7 @@ use strict;
 BEGIN {
   use Exporter ();
   use vars qw($VERSION @ISA @EXPORT_OK %MAP %known);
-  $VERSION = '0.02';
+  $VERSION = '0.03';
   @ISA     = qw(Exporter);
   @EXPORT_OK = qw(&cardinal &known_langs &langs);
 }
@@ -113,6 +113,12 @@ my $template_obj  = 'use __PACKAGE_WITH_VERSION__ ();'."\n".
 		 'code'     => 'use __PACKAGE_WITH_VERSION__ ();'."\n".
 		 'my $tmp_obj = new __PACKAGE__;'."\n".
 		 '$result = $tmp_obj->__FUNCTION__($number);'."\n"
+		},
+	  eu => {
+		 'package'  => 'Numbers',
+		 'version'  => '0.01',
+		 'function' => 'cardinal2alpha',
+		 'code'     => $template_func
 		},
 	  fr => {
 		 'package'  => 'Numbers',

@@ -1,4 +1,4 @@
-Lingua/Num2Word version 0.02
+Lingua/Num2Word version 0.03
 ============================
 
 Lingua::Num2Word is a wrapper for number to text conversion modules of
@@ -24,6 +24,7 @@ This module requires these other modules and libraries:
     de - Lingua::DE::Num2Word
     en - Lingua::EN::Numbers
     es - Lingua::ES::Numeros
+    eu - Lingua::EU::Numbers
     fr - Lingua::FR::Numbers
     id - Lingua::ID::Nums2Words
     ja - Lingua::JA::Number

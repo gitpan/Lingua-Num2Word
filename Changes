@@ -1,5 +1,8 @@
 Revision history for Perl extension Lingua::Num2Word.
 
+0.03	- add support for language
+	  eu - Lingua::EU::Numbers
+
 0.02	- fix procedural interface (thanks to Briac Pilpré)
 
 0.01	- original version; spuport for languages/packages:
