@@ -1,0 +1,38 @@
+Lingua/Num2Word version 0.01
+============================
+
+Lingua::Num2Word is a wrapper for number to text conversion modules of
+various languages in the Lingua:: hierarchy.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  module for requested conversion eg. Lingua::AF::Numbers for Afrikaans
+  currently supported languages/modules are:
+    af - Lingua::AF::Numbers
+    cs - Lingua::CS::Num2Word
+    de - Lingua::DE::Num2Word
+    en - Lingua::EN::Numbers
+    es - Lingua::ES::Numeros
+    fr - Lingua::FR::Numbers
+    id - Lingua::ID::Nums2Words
+    ja - Lingua::JA::Number
+    pt - Lingua::PT::Nums2Words
+
+
+COPYRIGHT AND LICENCE
+
+Copyright (c) 2002 PetaMem s.r.o.
+
+This package is free software. Tou can redistribute and/or modify it under
+the same terms as Perl itself.

@@ -1,0 +1,12 @@
+Revision history for Perl extension Lingua::Num2Word.
+
+0.01	- original version; spuport for languages/packages:
+	  af - Lingua::AF::Numbers
+	  cs - Lingua::CS::Num2Word
+	  de - Lingua::DE::Num2Word
+	  en - Lingua::EN::Numbers
+	  es - Lingua::ES::Numeros
+	  fr - Lingua::FR::Numbers
+	  id - Lingua::ID::Nums2Words
+	  ja - Lingua::JA::Number
+	  pt - Lingua::PT::Nums2Words
