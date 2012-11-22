@@ -1,0 +1,26 @@
+---
+abstract: 'Lingua::Num2Word is a module for converting numbers into their equivalent in written representation. This is a wrapper for various Lingua::XXX::Num2Word modules that do the conversions for specific languages. Output encoding is utf-8.'
+author:
+  - 'PetaMem s.r.o. <info@petamem.com>'
+build_requires:
+  Data::Dumper: 0
+  Test::More: 0
+  perl: v5.10.1
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
+license: open_source
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Lingua-Num2Word
+requires:
+  Carp: 0
+  Encode: 0
+  Exporter: 0
+  strict: 0
+  utf8: 0
+  vars: 0
+  warnings: 0
+version: 0.044

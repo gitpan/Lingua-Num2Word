@@ -1,6 +1,7 @@
-Changes
-MANIFEST			This list of files
+LICENSE
+MANIFEST
+META.yml
 Makefile.PL
-Num2Word.pm
 README
-t/use.t
+lib/Lingua/Num2Word.pm
+t/Num2Word.t
