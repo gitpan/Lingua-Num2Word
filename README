@@ -1,9 +1,9 @@
 
 
 This archive contains the distribution Lingua-Num2Word,
-version 0.044:
+version 0.0477:
 
-  Lingua::Num2Word is a module for converting numbers into their equivalent in written representation. This is a wrapper for various Lingua::XXX::Num2Word modules that do the conversions for specific languages. Output encoding is utf-8.
+  Lingua::Num2Word is a wrapper for modules for converting numbers into their equivalent in written representation.
 
 source: http://opensource.org
 

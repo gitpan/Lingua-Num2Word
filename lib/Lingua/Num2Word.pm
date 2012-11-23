@@ -3,7 +3,7 @@
 # Copyright (C) PetaMem, s.r.o. 2002-present
 #
 package Lingua::Num2Word;
-# ABSTRACT: Lingua::Num2Word is a module for converting numbers into their equivalent in written representation. This is a wrapper for various Lingua::XXX::Num2Word modules that do the conversions for specific languages. Output encoding is utf-8.
+# ABSTRACT: Lingua::Num2Word is a wrapper for modules for converting numbers into their equivalent in written representation.
 
 # {{{ use block
 
@@ -18,13 +18,13 @@ use Encode;
 # }}}
 # {{{ BEGIN
 
-my($ver)     = ('$Rev: 440 $' =~ m{(\d+)}xms);
+my($ver)     = ('$Rev: 477 $' =~ m{(\d+)}xms);
 our $VERSION = $ver / 10_000;
 
 BEGIN {
     use Exporter ();
     use vars qw($VERSION $REVISION @ISA @EXPORT_OK %known);
-    ($REVISION) = '$Rev: 440 $' =~ /([\d.]+)/; #'
+    ($REVISION) = '$Rev: 477 $' =~ /([\d.]+)/; #'
     @ISA        = qw(Exporter);
     @EXPORT_OK  = qw(cardinal get_interval known_langs langs preprocess_code);
 }
@@ -304,12 +304,12 @@ Lingua::Num2Word
 
 =head1 VERSION
 
-version 0.044
+version 0.0477
 
 wrapper for number to text conversion modules of
 various languages in the Lingua:: hierarchy.
 
-=head2 $Rev: 440 $
+=head2 $Rev: 477 $
 
 A wrapper for mosules in the Lingua::XXX hierarchy.
 XXX is a code from the ISO 639-3 namespace.
@@ -345,10 +345,11 @@ XXX is a code from the ISO 639-3 namespace.
 
 =head1 DESCRIPTION
 
-Lingua::Num2Word is a module for converting numbers into their
-equivalent in written representation. This is a wrapper for various
-Lingua::XXX::Num2Word modules that do the conversions for specific
-languages. Output encoding is utf-8.
+Lingua::Num2Word is a wrapper for modules for converting numbers into
+their equivalent in written representation.
+
+This is a wrapper for various Lingua::XXX::Num2Word modules that do the
+conversions for specific languages. Output encoding is utf-8.
 
 For further information about various limitations of the specific
 modules see their documentation.
