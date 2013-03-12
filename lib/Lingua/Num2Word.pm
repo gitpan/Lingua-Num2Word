@@ -7,6 +7,8 @@ package Lingua::Num2Word;
 
 # {{{ use block
 
+use 5.10.1;
+
 use strict;
 use warnings;
 
@@ -18,12 +20,12 @@ use Encode;
 # }}}
 # {{{ BEGIN
 
-our $VERSION = 0.0577;
+our $VERSION = 0.0682;
 
 BEGIN {
     use Exporter ();
     use vars qw($VERSION $REVISION @ISA @EXPORT_OK %known);
-    ($REVISION) = '$Rev: 577 $' =~ /([\d.]+)/; #'
+    ($REVISION) = '$Rev: 682 $' =~ /([\d.]+)/; #'
     @ISA        = qw(Exporter);
     @EXPORT_OK  = qw(cardinal get_interval known_langs langs preprocess_code);
 }
@@ -303,12 +305,12 @@ Lingua::Num2Word
 
 =head1 VERSION
 
-version 0.0577
+version 0.0682
 
 wrapper for number to text conversion modules of
 various languages in the Lingua:: hierarchy.
 
-=head2 $Rev: 577 $
+=head2 $Rev: 682 $
 
 A wrapper for mosules in the Lingua::XXX hierarchy.
 XXX is a code from the ISO 639-3 namespace.

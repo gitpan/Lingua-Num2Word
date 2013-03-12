@@ -5,7 +5,6 @@ author:
 build_requires:
   Data::Dumper: 0
   Test::More: 0
-  perl: v5.10.1
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
@@ -19,8 +18,9 @@ requires:
   Carp: 0
   Encode: 0
   Exporter: 0
+  perl: v5.10.1
   strict: 0
   utf8: 0
   vars: 0
   warnings: 0
-version: 0.0577
+version: 0.0682
